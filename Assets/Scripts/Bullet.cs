@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
 
     public Vector2 direction = new Vector2(1, 0);
-    public float speed = 2f;
+    public float speed = 20f;
 
     public Vector2 velocity;
 
@@ -19,6 +19,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Mantener compatibilidad: actualizar velocity en Update por si la dirección cambia.
         velocity = direction.normalized * speed;
     }
     
@@ -29,5 +30,11 @@ public class Bullet : MonoBehaviour
         pos += velocity * Time.fixedDeltaTime;
 
         transform.position = pos;
+    }
+
+    private void OnValidate()
+    {
+        // Permite ver movimiento en editor si se cambia la dirección/speed
+        velocity = direction.normalized * speed;
     }
 }

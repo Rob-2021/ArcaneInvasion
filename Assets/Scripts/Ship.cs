@@ -11,13 +11,12 @@ public class Ship : MonoBehaviour
     [Header("Input System")]
     public InputActionAsset inputActions;
     private InputAction moveAction;
+    private InputAction attackAction;
 
     [Header("Movement Settings")]
     public float moveSpeed = 3f;
 
     private Vector2 moveInput;
-
-    bool shoot;
 
     void Start()
     {
@@ -51,6 +50,18 @@ public class Ship : MonoBehaviour
         moveAction.Enable();
         moveAction.performed += OnMove;
         moveAction.canceled += OnMove;
+
+        // Registrar la acción "Attack" (disparo)
+        attackAction = playerMap.FindAction("Attack");
+        if (attackAction == null)
+        {
+            Debug.LogWarning("⚠️ No se encontró la acción 'Attack' en el ActionMap 'Player'. Usa el inspector para asignar un InputActionAsset con esa acción.");
+        }
+        else
+        {
+            attackAction.Enable();
+            attackAction.performed += OnAttack;
+        }
     }
 
     private void OnDisable()
@@ -61,11 +72,33 @@ public class Ship : MonoBehaviour
             moveAction.performed -= OnMove;
             moveAction.canceled -= OnMove;
         }
+
+        if (attackAction != null)
+        {
+            attackAction.Disable();
+            attackAction.performed -= OnAttack;
+        }
     }
 
     private void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+    }
+
+    private void OnAttack(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        if (guns == null || guns.Length == 0)
+        {
+            Debug.LogWarning("⚠️ No hay Guns asignadas como hijos del Ship.");
+            return;
+        }
+
+        foreach (Gun gun in guns)
+        {
+            gun.Shoot();
+        }
     }
 
     private void FixedUpdate()
