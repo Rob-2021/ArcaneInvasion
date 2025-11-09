@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class Ship : MonoBehaviour
 {
+
+    Gun[] guns;
+
     [Header("Input System")]
     public InputActionAsset inputActions;
     private InputAction moveAction;
@@ -13,6 +16,13 @@ public class Ship : MonoBehaviour
     public float moveSpeed = 3f;
 
     private Vector2 moveInput;
+
+    bool shoot;
+
+    void Start()
+    {
+        guns = transform.GetComponentsInChildren<Gun>();
+    }
 
     private void OnEnable()
     {
