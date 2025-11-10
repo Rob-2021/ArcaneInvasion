@@ -9,11 +9,42 @@ public class Bullet : MonoBehaviour
     public float speed = 20f;
 
     public Vector2 velocity;
+    public float lifeTime = 3f;
 
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 3);
+        // Si la bala se usa por instanciación directa (sin pool), la destruimos tras lifeTime
+        if (BulletPool.Instance == null)
+            Destroy(gameObject, lifeTime);
+    }
+
+    private void OnEnable()
+    {
+        // Si usamos pool, programar el retorno tras lifeTime
+        if (BulletPool.Instance != null)
+        {
+            CancelInvoke(nameof(ReturnToPool));
+            Invoke(nameof(ReturnToPool), lifeTime);
+        }
+    }
+
+    private void OnDisable()
+    {
+        // Cancelar cualquier invoke pendiente al desactivar
+        CancelInvoke(nameof(ReturnToPool));
+    }
+
+    private void ReturnToPool()
+    {
+        if (BulletPool.Instance != null)
+        {
+            BulletPool.Instance.Despawn(this);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -36,5 +67,13 @@ public class Bullet : MonoBehaviour
     {
         // Permite ver movimiento en editor si se cambia la dirección/speed
         velocity = direction.normalized * speed;
+    }
+
+    /// <summary>
+    /// Ajusta el tiempo de vida de la bala (útil para pooling).
+    /// </summary>
+    public void SetLifeTime(float t)
+    {
+        lifeTime = t;
     }
 }
