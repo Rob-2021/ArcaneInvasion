@@ -17,6 +17,9 @@ public class Gun : MonoBehaviour
     // También aseguramos la posición/z/escala básica y asignamos dirección.
     public void Shoot()
     {
+
+        ControladorSonidos.Instancia.ReproducirSonido("NaveLaser");
+
         if (bullet == null)
         {
             Debug.LogWarning("⚠️ Bullet prefab no asignado en Gun.");

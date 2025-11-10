@@ -83,6 +83,7 @@ public class Ship : MonoBehaviour
     private void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+        ControladorSonidos.Instancia.ReproducirSonido("NaveMovimiento");
     }
 
     private void OnAttack(InputAction.CallbackContext context)
