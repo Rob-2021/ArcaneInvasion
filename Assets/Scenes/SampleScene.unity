@@ -678,7 +678,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -2406516704490605977, guid: 03198a62b4e0cb649bcdb6852f1a27ff, type: 3}
       propertyPath: inverted
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2406516704490605977, guid: 03198a62b4e0cb649bcdb6852f1a27ff, type: 3}
       propertyPath: frequency
@@ -1106,7 +1106,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -2406516704490605977, guid: 03198a62b4e0cb649bcdb6852f1a27ff, type: 3}
       propertyPath: inverted
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2406516704490605977, guid: 03198a62b4e0cb649bcdb6852f1a27ff, type: 3}
       propertyPath: frequency
@@ -1643,7 +1643,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -2406516704490605977, guid: 03198a62b4e0cb649bcdb6852f1a27ff, type: 3}
       propertyPath: inverted
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2406516704490605977, guid: 03198a62b4e0cb649bcdb6852f1a27ff, type: 3}
       propertyPath: frequency
@@ -1827,7 +1827,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -2406516704490605977, guid: 03198a62b4e0cb649bcdb6852f1a27ff, type: 3}
       propertyPath: inverted
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2406516704490605977, guid: 03198a62b4e0cb649bcdb6852f1a27ff, type: 3}
       propertyPath: frequency
