@@ -14,6 +14,8 @@ public class Gun : MonoBehaviour
     float shootTimer = 0f;
     float delayTimer = 0f;
 
+    public bool isActive = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,12 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
+
+        if(!isActive)
+        {
+            return;
+        }
+
         if (autoShoot)
         {
             if(delayTimer >= shootDelaySeconds)

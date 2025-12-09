@@ -19,6 +19,8 @@ public class Bullet : MonoBehaviour
         // Si la bala se usa por instanciación directa (sin pool), la destruimos tras lifeTime
         if (BulletPool.Instance == null)
             Destroy(gameObject, lifeTime);
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()
