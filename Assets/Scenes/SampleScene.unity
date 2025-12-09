@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed052ebe457fe7e4ba3f47c01ff682b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 25380694679175841, guid: b70822f04ecec90498be34fb012d0ab0, type: 3}
+  bullet: {fileID: 1515476500586866978, guid: 0dab3bc97b84ac746a0083929e881018, type: 3}
   autoShoot: 0
   shootIntervalSeconds: 0.5
   shootDelaySeconds: 2
@@ -542,9 +542,17 @@ PrefabInstance:
       value: EnemyType2
       objectReference: {fileID: 0}
     - target: {fileID: 8569888092722939944, guid: cb1ce884eff3c1447a0e21ea1f1fe9c8, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 1515476500586866978, guid: e40b5dc05fa83704e81b0c1e8d701333, type: 3}
+    - target: {fileID: 8569888092722939944, guid: cb1ce884eff3c1447a0e21ea1f1fe9c8, type: 3}
       propertyPath: autoShoot
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8588784766473760981, guid: cb1ce884eff3c1447a0e21ea1f1fe9c8, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 1515476500586866978, guid: e40b5dc05fa83704e81b0c1e8d701333, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -594,7 +602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed052ebe457fe7e4ba3f47c01ff682b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 25380694679175841, guid: b70822f04ecec90498be34fb012d0ab0, type: 3}
+  bullet: {fileID: 1515476500586866978, guid: 0dab3bc97b84ac746a0083929e881018, type: 3}
   autoShoot: 0
   shootIntervalSeconds: 0.5
   shootDelaySeconds: 2
@@ -1075,7 +1083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed052ebe457fe7e4ba3f47c01ff682b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 25380694679175841, guid: b70822f04ecec90498be34fb012d0ab0, type: 3}
+  bullet: {fileID: 1515476500586866978, guid: 0dab3bc97b84ac746a0083929e881018, type: 3}
   autoShoot: 0
   shootIntervalSeconds: 0.5
   shootDelaySeconds: 2
@@ -1277,7 +1285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed052ebe457fe7e4ba3f47c01ff682b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 25380694679175841, guid: b70822f04ecec90498be34fb012d0ab0, type: 3}
+  bullet: {fileID: 1515476500586866978, guid: 0dab3bc97b84ac746a0083929e881018, type: 3}
   autoShoot: 0
   shootIntervalSeconds: 0.5
   shootDelaySeconds: 2
@@ -1452,6 +1460,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1470047389}
   - component: {fileID: 1470047388}
+  - component: {fileID: 1470047390}
   m_Layer: 0
   m_Name: PoolBullet
   m_TagString: Untagged
@@ -1471,7 +1480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dddb725be77a44440a426486dde71d67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 25380694679175841, guid: b70822f04ecec90498be34fb012d0ab0, type: 3}
+  bulletPrefab: {fileID: 1515476500586866978, guid: 0dab3bc97b84ac746a0083929e881018, type: 3}
   initialSize: 20
 --- !u!4 &1470047389
 Transform:
@@ -1488,6 +1497,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1470047390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470047387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dddb725be77a44440a426486dde71d67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 1515476500586866978, guid: e40b5dc05fa83704e81b0c1e8d701333, type: 3}
+  initialSize: 20
 --- !u!1 &1587591616
 GameObject:
   m_ObjectHideFlags: 0
@@ -2075,7 +2098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed052ebe457fe7e4ba3f47c01ff682b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 25380694679175841, guid: b70822f04ecec90498be34fb012d0ab0, type: 3}
+  bullet: {fileID: 1515476500586866978, guid: 0dab3bc97b84ac746a0083929e881018, type: 3}
   autoShoot: 0
   shootIntervalSeconds: 0.5
   shootDelaySeconds: 2
