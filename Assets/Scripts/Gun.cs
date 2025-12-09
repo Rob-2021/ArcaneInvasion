@@ -7,10 +7,40 @@ public class Gun : MonoBehaviour
 {
 
     public Bullet bullet;
+
+    public bool autoShoot = false;
+    public float shootIntervalSeconds = 0.5f;
+    public float shootDelaySeconds = 2.0f;
+    float shootTimer = 0f;
+    float delayTimer = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    void Update()
+    {
+        if (autoShoot)
+        {
+            if(delayTimer >= shootDelaySeconds)
+            {
+                if (shootTimer >= shootIntervalSeconds)
+                {
+                    Shoot();
+                    shootTimer = 0f;
+                }
+                else
+                {
+                    shootTimer += Time.deltaTime;
+                }
+            }
+            else
+            {
+                delayTimer += Time.deltaTime;
+            }
+        }
     }
 
     // Instancia un Bullet a partir de la referencia al prefab (tipo Bullet).

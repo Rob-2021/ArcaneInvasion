@@ -11,6 +11,8 @@ public class Bullet : MonoBehaviour
     public Vector2 velocity;
     public float lifeTime = 3f;
 
+    public bool isEnemy = false;
+
     // Start is called before the first frame update
     void Start()
     {
