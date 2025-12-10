@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Gun : MonoBehaviour
 {
-
+    public int powerUpLevelRequirement = 0;
+    
     public Bullet bullet;
 
     public bool autoShoot = false;
