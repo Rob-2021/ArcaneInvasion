@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Ship : MonoBehaviour
 {
+
+    public static Ship instance;
 
     Gun[] guns;
 
@@ -37,16 +40,70 @@ public class Ship : MonoBehaviour
             }
         }
     }
+    private void Awake()
+    {
+        // Make the Ship persistent across scenes and prevent duplicates
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+
+    // private void OnEnable()
+    // {
+    //     Debug.Log($"Ship OnEnable called for '{gameObject.name}'");
+    // }
 
     private void OnEnable()
     {
+        Debug.Log($"Ship OnEnable called for '{gameObject.name}'");
+        // (Re)configure input bindings when enabled
+        SetupInputActions();
+    }
+
+    private void OnDisable()
+    {
+        UnbindInputActions();
+        Debug.Log($"Ship OnDisable called for '{gameObject.name}'");
+    }
+
+    // Unbind and disable existing input action callbacks
+    void UnbindInputActions()
+    {
+        if (moveAction != null)
+        {
+            moveAction.performed -= OnMove;
+            moveAction.canceled -= OnMove;
+            moveAction.Disable();
+            moveAction = null;
+        }
+
+        if (attackAction != null)
+        {
+            attackAction.performed -= OnAttack;
+            attackAction.Disable();
+            attackAction = null;
+        }
+    }
+
+    // Configure and enable input actions (safe to call multiple times)
+    public void SetupInputActions()
+    {
+        // Ensure we unbind first to avoid duplicate handlers
+        UnbindInputActions();
+
         if (inputActions == null)
         {
             Debug.LogError("❌ No se asignó el InputActionAsset en el inspector.");
             return;
         }
 
-        // Busca el ActionMap llamado "Player"
         var playerMap = inputActions.FindActionMap("Player");
         if (playerMap == null)
         {
@@ -54,7 +111,6 @@ public class Ship : MonoBehaviour
             return;
         }
 
-        // Busca la acción "Move"
         moveAction = playerMap.FindAction("Move");
         if (moveAction == null)
         {
@@ -66,7 +122,6 @@ public class Ship : MonoBehaviour
         moveAction.performed += OnMove;
         moveAction.canceled += OnMove;
 
-        // Registrar la acción "Attack" (disparo)
         attackAction = playerMap.FindAction("Attack");
         if (attackAction == null)
         {
@@ -79,31 +134,21 @@ public class Ship : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        if (moveAction != null)
-        {
-            moveAction.Disable();
-            moveAction.performed -= OnMove;
-            moveAction.canceled -= OnMove;
-        }
-
-        if (attackAction != null)
-        {
-            attackAction.Disable();
-            attackAction.performed -= OnAttack;
-        }
-    }
-
     private void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
         ControladorSonidos.Instancia.ReproducirSonido("NaveMovimiento");
+        // Diagnostic log to confirm input is received
+        // (prints every frame while moving; remove or reduce spam later)
+        // Use LogFormat to make it easy to filter
+        Debug.LogFormat("[Ship] OnMove: {0} (context.phase={1})", moveInput, context.phase);
     }
 
     private void OnAttack(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
+
+        Debug.Log("[Ship] OnAttack performed");
 
         if (guns == null || guns.Length == 0)
         {

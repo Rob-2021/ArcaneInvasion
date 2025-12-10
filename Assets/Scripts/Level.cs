@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class Level : MonoBehaviour
@@ -74,6 +75,22 @@ public class Level : MonoBehaviour
         {
             scoreText = null;
             scoreTextTMP = null;
+        }
+
+        // Fix potential duplicate EventSystem issue: keep only one active EventSystem
+        var eventSystems = GameObject.FindObjectsOfType<EventSystem>();
+        if (eventSystems != null && eventSystems.Length > 1)
+        {
+            Debug.LogWarning($"There are {eventSystems.Length} EventSystem instances — removing duplicates.");
+            // Keep the first one, destroy the rest
+            for (int i = 1; i < eventSystems.Length; i++)
+            {
+                // Only destroy if not null and not the same object
+                if (eventSystems[i] != null)
+                {
+                    Destroy(eventSystems[i].gameObject);
+                }
+            }
         }
     }
 
