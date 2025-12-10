@@ -16,6 +16,13 @@ public class Destructable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(transform.position.x < -10)
+        {
+            Level.instance.RemoveDestructable();
+            Destroy(gameObject);
+        }
+
         if (transform.position.x < 8.0f && !canBeDestroyed)
         {
             canBeDestroyed = true;
@@ -39,15 +46,11 @@ public class Destructable : MonoBehaviour
             if (!bullet.isEnemy)
             {
                 Level.instance.AddScore(scoreValue);
+                Level.instance.RemoveDestructable();
                 Destroy(gameObject);
                 Destroy(bullet.gameObject);
             }
         }
-    }
-
-    private void OnDestroy()
-    {
-        Level.instance.RemoveDestructable();
     }
 
 }

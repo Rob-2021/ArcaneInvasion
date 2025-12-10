@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Ship : MonoBehaviour
 {
-
+    Vector2 initialPosition;
     public static Ship instance;
 
     int hits = 3;
@@ -23,6 +23,7 @@ public class Ship : MonoBehaviour
 
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
+    float speedMultiplier = 1f;
 
     private Vector2 moveInput;
 
@@ -60,6 +61,8 @@ public class Ship : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        initialPosition = transform.position;
 
         spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
     }
@@ -173,7 +176,7 @@ public class Ship : MonoBehaviour
     private void FixedUpdate()
     {
         Vector2 pos = transform.position;
-        float moveAmount = moveSpeed * Time.fixedDeltaTime;
+        float moveAmount = moveSpeed * speedMultiplier * Time.fixedDeltaTime;
 
         Vector2 move = moveInput.normalized * moveAmount;
         pos += move;
@@ -230,21 +233,30 @@ public class Ship : MonoBehaviour
         powerUpGunLevel++;
         foreach (Gun gun in guns)
         {
-            if (gun.powerUpLevelRequirement == powerUpGunLevel)
+            if (gun.powerUpLevelRequirement <= powerUpGunLevel)
             {
                 gun.gameObject.SetActive(true);
+            }
+            else{
+                gun.gameObject.SetActive(false);
             }
         }
     }
 
-    void IncreaseSpeed()
+    void SetSpeedMultiplier(float mult)
     {
-        moveSpeed *= 2f;
+        speedMultiplier = mult;
     }
 
     void ResetShip()
     {
-        Destroy(gameObject);
+        transform.position = initialPosition;
+        DeactivateShield();
+        powerUpGunLevel = -1;
+        AddGuns();
+        SetSpeedMultiplier(1f);
+        hits = 3;
+        Level.instance.ResetLevel();
     }
 
     void Hit(GameObject gameObjectHit)
@@ -304,7 +316,7 @@ public class Ship : MonoBehaviour
             }
             if (powerUp.increaseSpeed)
             {
-                IncreaseSpeed();
+                SetSpeedMultiplier(speedMultiplier + 1);
             }
             Level.instance.AddScore(powerUp.pointValue);
             Destroy(powerUp.gameObject);

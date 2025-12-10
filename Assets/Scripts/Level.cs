@@ -11,7 +11,7 @@ public class Level : MonoBehaviour
 
     public static Level instance;
 
-    uint numDestructables = 0;
+    int numDestructables = 0;
     bool startNextLevel = false;
     float nextLevelTimer = 3.0f;
 
@@ -55,6 +55,7 @@ public class Level : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log($"Level: OnSceneLoaded called for scene '{scene.name}' (currentLevel={currentLevel})");
         // After a scene loads, try to find the ScoreText in the newly loaded scene
         var go = GameObject.Find("ScoreText");
         if (go != null)
@@ -92,12 +93,13 @@ public class Level : MonoBehaviour
                 }
             }
         }
+        Debug.Log($"Level: OnSceneLoaded finished. numDestructables={numDestructables}");
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -108,9 +110,11 @@ public class Level : MonoBehaviour
             if (nextLevelTimer <= 0)
             {
                 currentLevel++;
+                Debug.Log($"Level: Advancing to level {currentLevel}");
                 if (currentLevel <= levels.Length)
                 {
                     string sceneName = levels[currentLevel - 1];
+                    Debug.Log($"Level: Loading scene '{sceneName}' (index {currentLevel - 1})");
                     SceneManager.LoadScene(sceneName);
                 }
                 else
@@ -126,6 +130,25 @@ public class Level : MonoBehaviour
                 nextLevelTimer -= Time.deltaTime;
             }
         }
+    }
+
+    public void ResetLevel()
+    {
+        foreach(Bullet b in GameObject.FindObjectsOfType<Bullet>()){
+            Destroy(b.gameObject);
+        }
+        Debug.Log("Level: ResetLevel called — clearing bullets, score, and resetting level state.");
+        numDestructables = 0;
+        score = 0;
+        // Ensure UI shows zero immediately
+        if (scoreText != null) scoreText.text = "0";
+        if (scoreTextTMP != null) scoreTextTMP.text = "0";
+        // Cancel any pending level advance
+        startNextLevel = false;
+        nextLevelTimer = 3.0f;
+        string sceneName = levels[Mathf.Clamp(currentLevel - 1, 0, levels.Length - 1)];
+        Debug.Log($"Level: Reloading scene '{sceneName}' (currentLevel={currentLevel})");
+        SceneManager.LoadScene(sceneName);
     }
 
     public void AddScore(int amountToAdd)
@@ -155,15 +178,27 @@ public class Level : MonoBehaviour
     public void AddDestructable()
     {
         numDestructables++;
+        Debug.Log($"Level: AddDestructable -> count = {numDestructables}");
     }
 
     public void RemoveDestructable()
     {
-        numDestructables--;
-
-        if (numDestructables == 0)
+        if (numDestructables > 0)
         {
+            numDestructables--;
+        }
+        else
+        {
+            Debug.LogWarning("Level: RemoveDestructable called but count is already 0");
+        }
+
+        Debug.Log($"Level: RemoveDestructable -> count = {numDestructables}");
+
+        if (numDestructables <= 0)
+        {
+            numDestructables = 0;
             startNextLevel = true;
+            Debug.Log("Level: All destructables cleared. Starting next level timer.");
         }
     }
 
