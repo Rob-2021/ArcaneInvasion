@@ -9,6 +9,11 @@ public class Ship : MonoBehaviour
 
     public static Ship instance;
 
+    int hits = 3;
+    bool invincible = false;
+    float invincibleTimer = 0f;
+    float invincibleTime = 2f;
+
     Gun[] guns;
 
     [Header("Input System")]
@@ -20,6 +25,8 @@ public class Ship : MonoBehaviour
     public float moveSpeed = 5f;
 
     private Vector2 moveInput;
+
+    SpriteRenderer spriteRenderer;
 
     GameObject shield;
     int powerUpGunLevel = 0;
@@ -53,12 +60,9 @@ public class Ship : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-    }
 
-    // private void OnEnable()
-    // {
-    //     Debug.Log($"Ship OnEnable called for '{gameObject.name}'");
-    // }
+        spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+    }
 
     private void OnEnable()
     {
@@ -132,6 +136,7 @@ public class Ship : MonoBehaviour
             attackAction.Enable();
             attackAction.performed += OnAttack;
         }
+
     }
 
     private void OnMove(InputAction.CallbackContext context)
@@ -180,6 +185,30 @@ public class Ship : MonoBehaviour
         transform.position = pos;
     }
 
+    private void Update()
+    {
+        // Handle invincibility timing and sprite blinking every frame
+        if (invincible)
+        {
+            if (invincibleTimer >= invincibleTime)
+            {
+                invincibleTimer = 0f;
+                invincible = false;
+                if (spriteRenderer != null)
+                    spriteRenderer.enabled = true;
+            }
+            else
+            {
+                invincibleTimer += Time.deltaTime;
+                if (spriteRenderer != null)
+                {
+                    // Blink: toggle based on fractional part of timer
+                    spriteRenderer.enabled = (Mathf.FloorToInt(invincibleTimer * 10) % 2) == 0;
+                }
+            }
+        }
+    }
+
 
     void ActivateShield()
     {
@@ -213,6 +242,38 @@ public class Ship : MonoBehaviour
         moveSpeed *= 2f;
     }
 
+    void ResetShip()
+    {
+        Destroy(gameObject);
+    }
+
+    void Hit(GameObject gameObjectHit)
+    {
+        if (HasShield())
+        {
+            DeactivateShield();
+        }
+        else
+        {
+            if (!invincible)
+            {
+                hits--;
+                if(hits == 0)
+                {
+                    ResetShip();
+                }
+                else
+                {
+                    invincible = true;
+                    invincibleTimer = 0f;
+                    if (spriteRenderer != null)
+                        spriteRenderer.enabled = false; // start blink sequence
+                }
+                Destroy(gameObjectHit);
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Bullet bullet = collision.GetComponent<Bullet>();
@@ -220,23 +281,14 @@ public class Ship : MonoBehaviour
         {
             if (bullet.isEnemy)
             {
-                Destroy(gameObject);
-                Destroy(bullet.gameObject);
+                Hit(bullet.gameObject);
             }
         }
 
         Destructable destructable = collision.GetComponent<Destructable>();
         if (destructable != null)
         {
-            if (HasShield())
-            {
-                DeactivateShield();
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-            Destroy(destructable.gameObject);
+            Hit(destructable.gameObject);
         }
 
         PowerUp powerUp = collision.GetComponent<PowerUp>();
