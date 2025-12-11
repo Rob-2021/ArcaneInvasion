@@ -1,5 +1,55 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &351453859360738759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4049150014064089308}
+  - component: {fileID: 433804190219388590}
+  m_Layer: 0
+  m_Name: Gun (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4049150014064089308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351453859360738759}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: 0.9848078, w: -0.17364809}
+  m_LocalPosition: {x: 8.43, y: -0.27, z: 45}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1104796652728707510}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 200}
+--- !u!114 &433804190219388590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351453859360738759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed052ebe457fe7e4ba3f47c01ff682b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpLevelRequirement: 0
+  bullet: {fileID: 1515476500586866978, guid: e40b5dc05fa83704e81b0c1e8d701333, type: 3}
+  autoShoot: 1
+  shootIntervalSeconds: 1
+  shootDelaySeconds: 0.2
+  isActive: 0
 --- !u!1 &3266225871031708493
 GameObject:
   m_ObjectHideFlags: 0
@@ -25,13 +75,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3266225871031708493}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 8.571, y: 0.518, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9848078, w: 0.17364825}
+  m_LocalPosition: {x: 8.533, y: 1.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1104796652728707510}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 160}
 --- !u!114 &8588784766473760981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,9 +95,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpLevelRequirement: 0
-  bullet: {fileID: 25380694679175841, guid: 0dab3bc97b84ac746a0083929e881018, type: 3}
+  bullet: {fileID: 1515476500586866978, guid: e40b5dc05fa83704e81b0c1e8d701333, type: 3}
   autoShoot: 1
-  shootIntervalSeconds: 2
+  shootIntervalSeconds: 1
   shootDelaySeconds: 0.2
   isActive: 0
 --- !u!1 &3847824285379572344
@@ -76,7 +126,7 @@ Transform:
   m_GameObject: {fileID: 3847824285379572344}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 8.571, y: 0.518, z: 0}
+  m_LocalPosition: {x: 8.48, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -95,10 +145,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpLevelRequirement: 0
-  bullet: {fileID: 25380694679175841, guid: 0dab3bc97b84ac746a0083929e881018, type: 3}
+  bullet: {fileID: 1515476500586866978, guid: e40b5dc05fa83704e81b0c1e8d701333, type: 3}
   autoShoot: 1
   shootIntervalSeconds: 1
-  shootDelaySeconds: 0
+  shootDelaySeconds: 0.2
   isActive: 0
 --- !u!1 &7760426050974333982
 GameObject:
@@ -114,7 +164,7 @@ GameObject:
   - component: {fileID: 4905118514980393965}
   - component: {fileID: 4447984210899651550}
   m_Layer: 0
-  m_Name: EnemyType2
+  m_Name: EnemyType4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,6 +186,7 @@ Transform:
   - {fileID: 8358497054318405209}
   - {fileID: 400709725437317659}
   - {fileID: 1726410097756246656}
+  - {fileID: 4049150014064089308}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4409518924391115373
