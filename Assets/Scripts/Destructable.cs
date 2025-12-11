@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Destructable : MonoBehaviour
 {
+    public GameObject explosion;
+
     bool canBeDestroyed = false;
     public int scoreValue = 100;
 
@@ -19,8 +21,8 @@ public class Destructable : MonoBehaviour
 
         if(transform.position.x < -10)
         {
-            Level.instance.RemoveDestructable();
-            Destroy(gameObject);
+            //Level.instance.RemoveDestructable();
+            DestroyDestructable();
         }
 
         if (transform.position.x < 8.0f && !canBeDestroyed)
@@ -46,11 +48,26 @@ public class Destructable : MonoBehaviour
             if (!bullet.isEnemy)
             {
                 Level.instance.AddScore(scoreValue);
-                Level.instance.RemoveDestructable();
-                Destroy(gameObject);
+                DestroyDestructable();
                 Destroy(bullet.gameObject);
             }
         }
+    }
+
+    void DestroyDestructable()
+    {
+        // Try to spawn the explosion at the visual center of the sprite (if present)
+        Vector3 spawnPos = transform.position;
+        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+        if (sr != null)
+        {
+            spawnPos = sr.bounds.center;
+        }
+
+        Instantiate(explosion, spawnPos, Quaternion.identity);
+
+        Level.instance.RemoveDestructable();
+        Destroy(gameObject);
     }
 
 }
